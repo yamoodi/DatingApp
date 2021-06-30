@@ -49,7 +49,7 @@ namespace DatingApp.API.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> login(LoginDto loginDto)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
+            var user = await _context.Users.Include(x => x.Photos).SingleOrDefaultAsync(x => x.UserName == loginDto.Username);
             if (user == null) return Unauthorized();
 
             using(var mac = new HMACSHA512(user.PasswordSalt))
@@ -60,7 +60,11 @@ namespace DatingApp.API.Controllers
                     if (computedHash[i] != user.PasswordHashed[i]) return Unauthorized();
                 }
 
-                return new UserDto { Username = user.UserName, Token = _TokenService.CreateToken(user) };
+                return new UserDto {
+                    Username = user.UserName, 
+                    Token = _TokenService.CreateToken(user) ,
+                    PhotoUrl=user.Photos.FirstOrDefault(x => x.IsMain)?.Url
+                    };
             }
         }
 

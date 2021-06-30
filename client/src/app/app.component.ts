@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { User } from './_models/user';
 import { AccountService } from './_services/account.service';
 
@@ -12,14 +11,10 @@ export class AppComponent implements OnInit {
   title = 'client';
   users: any; 
   
-  constructor(private accountService: AccountService, private spinner: NgxSpinnerService){
+  constructor(private accountService: AccountService){
   }
 
   ngOnInit(): void {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 5000);
    this.setCurrentUser();
   }
 

@@ -17,6 +17,7 @@ namespace DatingApp.API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration Configuration)
         {
+            services.Configure<CloudinarySettings>(Configuration.GetSection("CloudinarySettings"));
             services.AddDbContext<DataContext>(opt =>
             {
                 opt.UseSqlite(Configuration.GetConnectionString("con"));
@@ -24,6 +25,7 @@ namespace DatingApp.API.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+            services.AddScoped<IPhotoService, PhotoService>();
             return services;
         }
     }

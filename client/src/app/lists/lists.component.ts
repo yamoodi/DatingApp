@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-lists',
@@ -8,12 +7,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class ListsComponent implements OnInit {
 
-  constructor(private spinner: NgxSpinnerService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    console.log('spinner s');
-    this.spinner.show();
-    console.log('spinner e');
   }
 
 }
